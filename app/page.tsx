@@ -153,7 +153,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
-              <img src="/images/truckwys-logo-black.jpg" alt="TruckWys" className="max-w-[120px] md:max-w-[180px]" />
+              <Link href={'/'}>
+                <img src="/images/truckwys-logo-black.jpg" alt="TruckWys" className="max-w-[120px] md:max-w-[180px]" />
+              </Link>
             </div>
             <nav className="hidden md:flex items-center space-x-8">
               <Link href="#" className="text-base font-medium text-black hover:text-black transition-colors">
