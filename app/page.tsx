@@ -25,6 +25,7 @@ export default function HomePage() {
   const [activeModule, setActiveModule] = useState(1);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [navScrolled, setNavScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +40,10 @@ export default function HomePage() {
         const moduleIndex = Math.min(4, Math.max(1, Math.floor(scrollProgress * 5) + 1));
         setActiveModule(moduleIndex);
       }
+
+      // Change nav background when scrolled past 80vh (hero height)
+      const heroHeight = window.innerHeight * 0.8;
+      setNavScrolled(window.scrollY > heroHeight);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -148,48 +153,82 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-white font-sans">
-      {/* Header */}
-      <header className="bg-white sticky top-0 z-50">
+      {/* Header - Made floating with transparent background initially */}
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navScrolled ? 'bg-white shadow-sm' : 'bg-transparent'}`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex h-16 items-center justify-between">
             <div className="flex items-center">
-              <Link href={'/'}>
-                <img src="/images/truckwys-logo-black.jpg" alt="TruckWys" className="max-w-[120px] md:max-w-[180px]" />
-              </Link>
+              <img src="/images/truckwys-logo-transparent.png" alt="TruckWys" className="max-w-[120px] md:max-w-[180px]" />
             </div>
             <nav className="hidden md:flex items-center space-x-8">
-              <Link href="#" className="text-base font-medium text-black hover:text-black transition-colors">
+              <Link
+                href="#"
+                className={`text-base font-medium transition-colors ${
+                  navScrolled ? 'text-black hover:text-black' : 'text-black hover:text-gray-700'
+                }`}
+              >
                 Case Studies
               </Link>
-              <Link href="#" className="text-base font-medium text-black hover:text-black transition-colors">
+              <Link
+                href="#"
+                className={`text-base font-medium transition-colors ${
+                  navScrolled ? 'text-black hover:text-black' : 'text-black hover:text-gray-700'
+                }`}
+              >
                 About
               </Link>
-              <Link href="#" className="text-base font-medium text-black hover:text-black transition-colors">
+              <Link
+                href="#"
+                className={`text-base font-medium transition-colors ${
+                  navScrolled ? 'text-black hover:text-black' : 'text-black hover:text-gray-700'
+                }`}
+              >
                 Blog
               </Link>
-              <Link href="#" className="text-base font-medium text-black hover:text-black transition-colors">
+              <Link
+                href="#"
+                className={`text-base font-medium transition-colors ${
+                  navScrolled ? 'text-black hover:text-black' : 'text-black hover:text-gray-700'
+                }`}
+              >
                 Pricing
               </Link>
             </nav>
             <div className="hidden md:flex items-center space-x-4">
-              <Button variant="ghost" size="sm" className="text-black hover:bg-gray-100">
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`transition-colors border border-black h-10 px-6 ${
+                  navScrolled ? 'text-black hover:text-black hover:bg-gray-100' : 'text-black hover:text-black hover:bg-gray-100'
+                }`}
+              >
                 Sign in
               </Button>
               <Link href="/get-started">
-                <Button size="sm" className="text-white hover:opacity-90 h-10 px-6" style={{ backgroundColor: 'rgb(60, 131, 246)' }}>
+                <Button
+                  size="sm"
+                  className="text-white hover:bg-blue-700 h-10 px-6 transition-colors"
+                  style={{ backgroundColor: 'rgb(60, 131, 246)' }}
+                >
                   Get started
                 </Button>
               </Link>
             </div>
             {/* Mobile menu button */}
-            <button className="md:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
+            <button
+              className={`md:hidden p-2 ${navScrolled ? 'text-black' : 'text-black'}`}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle menu"
+            >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
           {/* Mobile menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden py-4 border-t border-gray-200">
+            <div className="md:hidden py-4 border-t border-gray-200 bg-white">
               <nav className="flex flex-col space-y-4">
                 <Link href="#" className="text-base font-medium text-black hover:text-black transition-colors">
                   Case Studies
@@ -204,11 +243,19 @@ export default function HomePage() {
                   Pricing
                 </Link>
                 <div className="flex flex-col space-y-2 pt-4 border-t border-gray-200">
-                  <Button variant="ghost" size="sm" className="text-black hover:bg-gray-100 w-full">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-black hover:text-black hover:bg-gray-100 w-full border border-black h-10"
+                  >
                     Sign in
                   </Button>
                   <Link href="/get-started">
-                    <Button size="sm" className="text-white hover:opacity-90 h-10 w-full" style={{ backgroundColor: 'rgb(60, 131, 246)' }}>
+                    <Button
+                      size="sm"
+                      className="text-white hover:bg-blue-700 h-10 w-full transition-colors"
+                      style={{ backgroundColor: 'rgb(60, 131, 246)' }}
+                    >
                       Get started
                     </Button>
                   </Link>
@@ -219,26 +266,19 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* Hero - NO FRAME */}
-      <section className="relative overflow-hidden h-[70vh] sm:h-[80vh] lg:h-[90vh] flex items-center bg-white">
-        <div className="absolute inset-0 w-full h-full">
-          {/* CHANGE: Changed back to object-cover to fill hero section */}
-          <img src="/images/hero-truck-bw.png" alt="TruckWys Fleet on the Road" className="w-full h-full object-cover" />
-          {/* CHANGE: Further reduced gradient overlay opacity from 70/40 to 50/25 */}
-          <div className="absolute inset-0 bg-gradient-to-r from-white/50 via-white/25 to-transparent"></div>
-        </div>
-
+      {/* Hero - NO FRAME - Extends to top of page, nav floats over it */}
+      <section className="relative overflow-hidden min-h-[70vh] sm:min-h-[80vh] lg:min-h-[90vh] flex items-center bg-gradient-to-b from-blue-100 via-blue-50 to-white pt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex flex-col justify-between py-8 sm:py-12 w-full">
-          <div className="max-w-full lg:max-w-[65%] flex flex-col justify-center flex-1">
+          <div className="max-w-full flex flex-col justify-center items-center flex-1 text-center">
             <div className="space-y-4 sm:space-y-6">
               <h1 className="font-semibold text-black text-balance leading-[1.1] text-[32px] sm:text-[42px] md:text-[52px] lg:text-[62px]">
                 The financial platform for fleet profitability
               </h1>
-              <p className="text-base sm:text-lg text-gray-600 text-pretty leading-relaxed max-w-full sm:max-w-[600px]">
+              <p className="text-base sm:text-lg text-gray-600 text-pretty leading-relaxed max-w-full sm:max-w-[600px] mx-auto">
                 Truckwys transforms your fleet's operational data into financial intelligence - helping you quote smarter, protect margins,
                 and get paid faster. Built for African fleets, powered by real AI.
               </p>
-              <div className="flex gap-4">
+              <div className="flex gap-4 justify-center pb-6 sm:pb-8">
                 <Link href="/get-started">
                   <Button
                     size="lg"
@@ -252,18 +292,49 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="flex flex-row gap-4 sm:gap-12 max-w-full lg:max-w-[65%]">
-            <div className="flex flex-col gap-1">
+          <div className="flex flex-row gap-4 sm:gap-12 justify-center max-w-full">
+            <div className="flex flex-col gap-1 items-center">
               <div className="text-2xl sm:text-3xl font-bold text-black">5M+</div>
               <div className="text-xs sm:text-sm text-gray-600">trips analysed</div>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 items-center">
               <div className="text-2xl sm:text-3xl font-bold text-black">15%</div>
               <div className="text-xs sm:text-sm text-gray-600">average margin uplift</div>
             </div>
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1 items-center">
               <div className="text-2xl sm:text-3xl font-bold text-black">10 days</div>
               <div className="text-xs sm:text-sm text-gray-600">faster payments</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Dashboard Showcase Section - Outside frame, full width */}
+      <section className="py-0 sm:py-1 lg:py-1 bg-gradient-to-b from-white to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-10 gap-3 items-stretch">
+            {/* Left side - 30% - Hand holding iPhone */}
+            <div className="lg:col-span-3 flex items-stretch">
+              <div className="relative w-full flex items-center justify-center bg-white rounded-lg overflow-hidden shadow-2xl border border-gray-200">
+                <img
+                  src="/hand-holding-modern-black-iphone-with-white-blank-.jpg"
+                  alt="Mobile app on iPhone"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* Right side - 70% - Dashboard screenshot */}
+            <div className="lg:col-span-7 flex items-stretch">
+              <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-200 relative w-full">
+                <img
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-10-27%20at%2013.15.47-BLzbrJLtqdXkw9H3kIKA1XfNzk8YC5.png"
+                  alt="Truckwys dashboard showing business health metrics, revenue trends, and actionable insights"
+                  className="w-full h-full object-cover"
+                />
+                {/* White gradient overlay on bottom 20% */}
+                <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -337,7 +408,7 @@ export default function HomePage() {
 
               {/* Kilimanjaro Logistics */}
               <div className="h-12 flex items-center justify-center">
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   <svg viewBox="0 0 24 24" fill="black" className="w-8 h-8">
                     <path d="M14,6L10.25,11L13.1,14.8L11.5,16C9.81,13.75 7,10 7,10L1,18H23L14,6Z" />
                   </svg>
@@ -417,7 +488,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative">
                   <div
-                    className="rounded-lg pt-12 pl-12 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -478,7 +549,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative lg:order-1">
                   <div
-                    className="rounded-lg pt-12 pl-12 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -559,7 +630,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative">
                   <div
-                    className="rounded-lg pt-12 pl-12 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -619,7 +690,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative lg:order-1">
                   <div
-                    className="rounded-lg pt-12 pl-12 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -819,25 +890,6 @@ export default function HomePage() {
                       </div>
                     </div>
 
-                    {/* Timeline indicator */}
-                    <div className="bg-white rounded-lg p-4 border border-gray-200">
-                      <div className="flex items-center justify-between text-xs text-gray-600 mb-2">
-                        <span>0 min</span>
-                        <span>2-4 hours</span>
-                      </div>
-                      <div className="relative h-2 bg-gray-200 rounded-full overflow-hidden">
-                        <div
-                          className="absolute left-0 top-0 h-full rounded-full"
-                          style={{
-                            backgroundColor: 'rgb(60, 131, 246)',
-                            width: '75%',
-                            animation: 'progress 3s ease-in-out infinite',
-                          }}
-                        ></div>
-                      </div>
-                      <div className="text-center mt-2 text-xs font-medium text-gray-700">Average processing time: 2-4 hours</div>
-                    </div>
-
                     {/* AI Analysis Details */}
                     <div className="mt-6 bg-blue-50 rounded-lg p-4 border border-blue-200">
                       <div className="flex items-start gap-3">
@@ -933,21 +985,154 @@ export default function HomePage() {
                   Connect, analyse, act and watch your profitability grow.
                 </p>
               </div>
-              <div className="relative max-w-5xl mx-auto rounded-md p-2">
-                <div className="[perspective:1000px]">
-                  <div className="[transform:rotateX(4deg)]">
-                    <div className="relative bg-gray-50 rounded-md p-4 border border-gray-200 shadow-2xl">
-                      <img
-                        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-10-17%20at%2016.29.10-YsvMq8fcw7zsBjgLJTNI5u0xQ35R1e.png"
-                        alt="TruckWys comprehensive dashboard showing alert cards for expiring quotes, at-risk margins, overdue payments, and fleet inefficiencies, alongside business health metrics including revenue, profit margin, cash on hand, fleet utilisation, and revenue & profit trend charts"
-                        className="w-full h-auto rounded-md"
-                      />
+
+              <div className="bg-gray-50 rounded-lg p-8 sm:p-12 mb-16 border border-gray-200 relative min-h-[600px]">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start max-w-6xl mx-auto">
+                  {/* Left side - Inputs */}
+                  <div className="space-y-6">
+                    <h3 className="text-lg font-semibold text-gray-600 mb-6">Data In</h3>
+
+                    {/* Invoice document */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 transform hover:scale-105 transition-transform">
+                      <div className="flex items-start gap-4">
+                        <FileText className="w-8 h-8 text-blue-600 flex-shrink-0" />
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-black mb-2">Invoice #2847</div>
+                          <div className="space-y-1">
+                            <div className="h-2 bg-gray-200 rounded w-full"></div>
+                            <div className="h-2 bg-gray-200 rounded w-3/4"></div>
+                            <div className="h-2 bg-gray-200 rounded w-5/6"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Spreadsheet */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 transform hover:scale-105 transition-transform">
+                      <div className="flex items-start gap-4">
+                        <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center flex-shrink-0">
+                          <div className="grid grid-cols-3 gap-0.5 w-5 h-5">
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                            <div className="bg-white rounded-sm"></div>
+                          </div>
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-black mb-2">Trip Data.xlsx</div>
+                          <div className="grid grid-cols-4 gap-1">
+                            {[...Array(12)].map((_, i) => (
+                              <div key={i} className="h-2 bg-gray-200 rounded"></div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Document */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm border border-gray-200 transform hover:scale-105 transition-transform">
+                      <div className="flex items-start gap-4">
+                        <FileText className="w-8 h-8 text-gray-600 flex-shrink-0" />
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-black mb-2">POD Document</div>
+                          <div className="space-y-1">
+                            <div className="h-2 bg-gray-200 rounded w-full"></div>
+                            <div className="h-2 bg-gray-200 rounded w-4/5"></div>
+                            <div className="h-2 bg-gray-200 rounded w-full"></div>
+                            <div className="h-2 bg-gray-200 rounded w-2/3"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Center divider with AI processing */}
+                  <div className="hidden lg:flex absolute left-1/2 top-0 bottom-0 -translate-x-1/2 flex-col items-center justify-center z-10">
+                    <div className="w-px h-full bg-gradient-to-b from-transparent via-blue-500 to-transparent"></div>
+                    <div className="absolute top-1/2 -translate-y-1/2 bg-white rounded-full p-4 shadow-lg border-2 border-blue-500">
+                      <Sparkles className="w-8 h-8 text-blue-600 animate-pulse" />
+                    </div>
+                  </div>
+
+                  {/* Right side - Outputs */}
+                  <div className="space-y-6 lg:pl-8">
+                    <h3 className="text-lg font-semibold text-gray-600 mb-6">Insights Out</h3>
+
+                    {/* Dashboard chart */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm border-2 border-blue-200 transform hover:scale-105 transition-transform relative">
+                      <div className="absolute -top-3 -right-3 w-6 h-6 bg-orange-400 rounded-full"></div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-purple-100 rounded px-3 py-1 flex-shrink-0">
+                          <span className="text-xs font-bold text-purple-700">Figure</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-black mb-3">Margin Analysis</div>
+                          <div className="flex items-end gap-2 h-20">
+                            <div className="flex-1 bg-blue-500 rounded-t" style={{ height: '60%' }}></div>
+                            <div className="flex-1 bg-blue-500 rounded-t" style={{ height: '80%' }}></div>
+                            <div className="flex-1 bg-blue-500 rounded-t" style={{ height: '45%' }}></div>
+                            <div className="flex-1 bg-blue-500 rounded-t" style={{ height: '90%' }}></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Data table */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm border-2 border-blue-200 transform hover:scale-105 transition-transform relative">
+                      <div className="absolute -top-3 -right-3 w-6 h-6 bg-orange-400 rounded-full"></div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-purple-100 rounded px-3 py-1 flex-shrink-0">
+                          <span className="text-xs font-bold text-purple-700">table</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-black mb-3">Route Performance</div>
+                          <div className="space-y-2">
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="h-2 bg-gray-300 rounded"></div>
+                              <div className="h-2 bg-gray-300 rounded"></div>
+                              <div className="h-2 bg-gray-300 rounded"></div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="h-2 bg-gray-200 rounded"></div>
+                              <div className="h-2 bg-gray-200 rounded"></div>
+                              <div className="h-2 bg-gray-200 rounded"></div>
+                            </div>
+                            <div className="grid grid-cols-3 gap-2">
+                              <div className="h-2 bg-gray-200 rounded"></div>
+                              <div className="h-2 bg-gray-200 rounded"></div>
+                              <div className="h-2 bg-gray-200 rounded"></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action item */}
+                    <div className="bg-white rounded-lg p-6 shadow-sm border-2 border-blue-200 transform hover:scale-105 transition-transform relative">
+                      <div className="absolute -top-3 -right-3 w-6 h-6 bg-orange-400 rounded-full"></div>
+                      <div className="flex items-start gap-4">
+                        <div className="bg-green-100 rounded px-3 py-1 flex-shrink-0">
+                          <span className="text-xs font-bold text-green-700">caption</span>
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-semibold text-black mb-2">Recommended Action</div>
+                          <div className="space-y-1">
+                            <div className="h-2 bg-gray-200 rounded w-full"></div>
+                            <div className="h-2 bg-gray-200 rounded w-3/4"></div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pt-8">
                 <div className="space-y-4">
                   <div className="flex items-center gap-3 min-h-[64px]">
                     <Database className="w-6 h-6 text-black flex-shrink-0" />
@@ -1531,7 +1716,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 mb-12">
             <div className="sm:col-span-2">
               <div className="mb-3">
-                <img src="/images/truckwys-logo-black.jpg" alt="TruckWys" className="max-w-[120px] md:max-w-[180px]" />
+                <img src="/images/truckwys-logo-transparent.png" alt="TruckWys" className="max-w-[120px] md:max-w-[180px]" />
               </div>
               <p className="text-gray-600 text-sm sm:text-base">The financial operating system for your fleet.</p>
             </div>
