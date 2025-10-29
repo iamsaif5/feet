@@ -27,23 +27,41 @@ export default function HomePage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [navScrolled, setNavScrolled] = useState(false);
 
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     const modulesSection = document.getElementById('modules-section');
+  //     if (!modulesSection) return;
+
+  //     const rect = modulesSection.getBoundingClientRect();
+  //     const windowHeight = window.innerHeight;
+
+  //     if (rect.top <= windowHeight && rect.bottom >= 0) {
+  //       const scrollProgress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight + rect.height)));
+  //       const moduleIndex = Math.min(4, Math.max(1, Math.floor(scrollProgress * 5) + 1));
+  //       setActiveModule(moduleIndex);
+  //     }
+
+  //     // Change nav background when scrolled past 80vh (hero height)
+  //     const heroHeight = window.innerHeight * 0.8;
+  //     setNavScrolled(window.scrollY > heroHeight);
+  //   };
+
+  //   window.addEventListener('scroll', handleScroll);
+  //   handleScroll();
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
+
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      const modulesSection = document.getElementById('modules-section');
-      if (!modulesSection) return;
-
-      const rect = modulesSection.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      if (rect.top <= windowHeight && rect.bottom >= 0) {
-        const scrollProgress = Math.max(0, Math.min(1, (windowHeight - rect.top) / (windowHeight + rect.height)));
-        const moduleIndex = Math.min(4, Math.max(1, Math.floor(scrollProgress * 5) + 1));
-        setActiveModule(moduleIndex);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const heroHeight = window.innerHeight * 0.1;
+          setNavScrolled(window.scrollY > heroHeight);
+          ticking = false;
+        });
+        ticking = true;
       }
-
-      // Change nav background when scrolled past 80vh (hero height)
-      const heroHeight = window.innerHeight * 0.8;
-      setNavScrolled(window.scrollY > heroHeight);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -150,6 +168,8 @@ export default function HomePage() {
   const prevTestimonial = () => {
     setActiveTestimonial(prev => (prev - 1 + testimonials.length) % testimonials.length);
   };
+
+  console.log(navScrolled);
 
   return (
     <div className="min-h-screen bg-white font-sans">
