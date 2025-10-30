@@ -372,7 +372,7 @@ export default function HomePage() {
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-10-27%20at%2013.15.47-BLzbrJLtqdXkw9H3kIKA1XfNzk8YC5.png"
                   alt="Truckwys dashboard showing business health metrics, revenue trends, and actionable insights"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-left"
                 />
                 {/* White gradient overlay on bottom 20% */}
                 <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
