@@ -169,8 +169,6 @@ export default function HomePage() {
     setActiveTestimonial(prev => (prev - 1 + testimonials.length) % testimonials.length);
   };
 
-  console.log(navScrolled);
-
   return (
     <div className="min-h-screen bg-white font-sans">
       {/* Header - Made floating with transparent background initially */}
@@ -333,19 +331,8 @@ export default function HomePage() {
       <section className="py-0 sm:py-1 lg:py-1 bg-gradient-to-b from-white to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-1 lg:grid-cols-10 gap-3 items-stretch">
-            {/* Left side - 30% - Hand holding iPhone */}
-            <div className="lg:col-span-3 flex items-stretch">
-              <div className="relative w-full flex items-center justify-center bg-white rounded-lg overflow-hidden shadow-2xl border border-gray-200">
-                <img
-                  src="/hand-holding-modern-black-iphone-with-white-blank-.jpg"
-                  alt="Mobile app on iPhone"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </div>
-
-            {/* Right side - 70% - Dashboard screenshot */}
-            <div className="lg:col-span-7 flex items-stretch">
+            {/* Right side - 70% - Dashboard screenshot - FIRST on mobile */}
+            <div className="lg:col-span-7 lg:order-2 flex items-stretch">
               <div className="rounded-lg overflow-hidden shadow-2xl border border-gray-200 relative w-full">
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Screenshot%202025-10-27%20at%2013.15.47-BLzbrJLtqdXkw9H3kIKA1XfNzk8YC5.png"
@@ -354,6 +341,17 @@ export default function HomePage() {
                 />
                 {/* White gradient overlay on bottom 20% */}
                 <div className="absolute bottom-0 left-0 right-0 h-[20%] bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+              </div>
+            </div>
+
+            {/* Left side - 30% - Hand holding iPhone - SECOND on mobile */}
+            <div className="lg:col-span-3 lg:order-1 flex items-stretch">
+              <div className="relative w-full flex items-center justify-center bg-white rounded-lg overflow-hidden shadow-2xl border border-gray-200">
+                <img
+                  src="/hand-holding-modern-black-iphone-with-white-blank-.jpg"
+                  alt="Mobile app on iPhone"
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -450,7 +448,7 @@ export default function HomePage() {
 
           <div className="px-4 sm:px-6 lg:px-16">
             <div className="py-8 sm:py-12 mb-8 sm:mb-12">
-              <h2 className="text-[24px] sm:text-[28px] lg:text-[32px] font-medium mb-4 text-black text-left leading-tight tracking-[-0.32px]">
+              <h2 className="text-[32px] sm:text-[28px] lg:text-[32px] font-medium mb-4 text-black text-left leading-tight tracking-[-0.32px]">
                 From quote to cash.
               </h2>
               <p className="text-[20px] sm:text-[24px] lg:text-[32px] text-gray-500 leading-tight sm:leading-[38px] tracking-[-0.32px] text-left">
@@ -508,7 +506,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative">
                   <div
-                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-4 pl-4 sm:pt-6 sm:pl-6 min-h-[300px] sm:min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -569,7 +567,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative lg:order-1">
                   <div
-                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-4 pl-4 sm:pt-6 sm:pl-6 min-h-[300px] sm:min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -650,7 +648,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative">
                   <div
-                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-4 pl-4 sm:pt-6 sm:pl-6 min-h-[300px] sm:min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -710,7 +708,7 @@ export default function HomePage() {
                 </div>
                 <div className="relative lg:order-1">
                   <div
-                    className="rounded-lg pt-6 pl-6 min-h-[400px] flex items-center justify-center"
+                    className="rounded-lg pt-4 pl-4 sm:pt-6 sm:pl-6 min-h-[300px] sm:min-h-[400px] flex items-center justify-center"
                     style={{
                       background: 'linear-gradient(to bottom, rgba(60, 131, 246, 0.08), rgba(60, 131, 246, 0.02))',
                     }}
@@ -744,10 +742,12 @@ export default function HomePage() {
                 </h2>
               </div>
               <div className="lg:pt-2">
-                <p className="text-[32px] text-gray-600 leading-[38px] tracking-[-0.32px] mb-2">
+                <p className="text-[20px] sm:text-[24px] lg:text-[32px] text-gray-600 leading-[38px] tracking-[-0.32px] mb-2">
                   AI-verified working capital for fleets. From POD to payment in hours.
                 </p>
-                <p className="text-[32px] text-gray-600 leading-[38px] tracking-[-0.32px]">No paperwork. No waiting. Just cash.</p>
+                <p className="text-[20px] sm:text-[24px] lg:text-[32px] text-gray-600 leading-[38px] tracking-[-0.32px]">
+                  No paperwork. No waiting. Just cash.
+                </p>
               </div>
             </div>
 
@@ -808,9 +808,9 @@ export default function HomePage() {
                 <div className="bg-gray-50 rounded-md border border-gray-200 p-8 min-h-[400px] flex items-center justify-center">
                   <div className="w-full max-w-2xl">
                     {/* Workflow Steps */}
-                    <div className="flex items-start justify-between mb-8">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between mb-8 gap-6 sm:gap-0">
                       {/* Step 1: Upload POD */}
-                      <div className="flex flex-col items-center gap-3 flex-1">
+                      <div className="flex flex-col items-center gap-3 flex-1 w-full sm:w-auto">
                         <div className="w-16 h-16 rounded-lg bg-white border-2 border-gray-200 flex items-center justify-center relative">
                           <FileText className="w-8 h-8 text-black" />
                           <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center">
@@ -818,13 +818,13 @@ export default function HomePage() {
                           </div>
                         </div>
                         <div className="text-center min-h-[48px] flex flex-col justify-start">
-                          <div className="text-sm font-semibold text-black">Upload POD</div>
+                          <div className="text-xs sm:text-sm font-semibold text-black">Upload POD</div>
                           <div className="text-xs text-gray-500">Completed trip</div>
                         </div>
                       </div>
 
-                      {/* Arrow 1 */}
-                      <div className="flex-shrink-0 px-4 pt-6">
+                      {/* Arrow 1 - Hidden on mobile */}
+                      <div className="hidden sm:flex flex-shrink-0 px-4 pt-6">
                         <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
                           <path
                             d="M0 10 L30 10 M30 10 L25 5 M30 10 L25 15"
@@ -837,7 +837,7 @@ export default function HomePage() {
                       </div>
 
                       {/* Step 2: AI Verification - EMPHASIZED */}
-                      <div className="flex flex-col items-center gap-3 flex-1">
+                      <div className="flex flex-col items-center gap-3 flex-1 w-full sm:w-auto">
                         <div className="relative">
                           {/* Pulsing background effect */}
                           <div className="absolute inset-0 w-16 h-16 rounded-lg bg-gray-200 opacity-50 animate-pulse"></div>
@@ -856,13 +856,13 @@ export default function HomePage() {
                           </div>
                         </div>
                         <div className="text-center min-h-[48px] flex flex-col justify-start">
-                          <div className="text-sm font-semibold text-black">AI Verification</div>
+                          <div className="text-xs sm:text-sm font-semibold text-black">AI Verification</div>
                           <div className="text-xs text-gray-600">Analyzing...</div>
                         </div>
                       </div>
 
-                      {/* Arrow 2 */}
-                      <div className="flex-shrink-0 px-4 pt-6">
+                      {/* Arrow 2 - Hidden on mobile */}
+                      <div className="hidden sm:flex flex-shrink-0 px-4 pt-6">
                         <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
                           <path
                             d="M0 10 L30 10 M30 10 L25 5 M30 10 L25 15"
@@ -875,18 +875,18 @@ export default function HomePage() {
                       </div>
 
                       {/* Step 3: Instant Approval */}
-                      <div className="flex flex-col items-center gap-3 flex-1">
+                      <div className="flex flex-col items-center gap-3 flex-1 w-full sm:w-auto">
                         <div className="w-16 h-16 rounded-lg bg-white border-2 border-gray-200 flex items-center justify-center">
                           <CheckCircle className="w-8 h-8 text-black" />
                         </div>
                         <div className="text-center min-h-[48px] flex flex-col justify-start">
-                          <div className="text-sm font-semibold text-black">Instant Approval</div>
+                          <div className="text-xs sm:text-sm font-semibold text-black">Instant Approval</div>
                           <div className="text-xs text-gray-500">Risk scored</div>
                         </div>
                       </div>
 
-                      {/* Arrow 3 */}
-                      <div className="flex-shrink-0 px-4 pt-6">
+                      {/* Arrow 3 - Hidden on mobile */}
+                      <div className="hidden sm:flex flex-shrink-0 px-4 pt-6">
                         <svg width="40" height="20" viewBox="0 0 40 20" fill="none">
                           <path
                             d="M0 10 L30 10 M30 10 L25 5 M30 10 L25 15"
@@ -899,12 +899,12 @@ export default function HomePage() {
                       </div>
 
                       {/* Step 4: Same-day Payment */}
-                      <div className="flex flex-col items-center gap-3 flex-1">
+                      <div className="flex flex-col items-center gap-3 flex-1 w-full sm:w-auto">
                         <div className="w-16 h-16 rounded-lg bg-white border-2 border-gray-200 flex items-center justify-center">
                           <Zap className="w-8 h-8 text-black" />
                         </div>
                         <div className="text-center min-h-[48px] flex flex-col justify-start">
-                          <div className="text-sm font-semibold text-black">Same-day Payment</div>
+                          <div className="text-xs sm:text-sm font-semibold text-black">Same-day Payment</div>
                           <div className="text-xs text-gray-500">Funds released</div>
                         </div>
                       </div>
@@ -1001,7 +1001,7 @@ export default function HomePage() {
                 <h2 className="text-[32px] font-medium leading-[38px] tracking-[-0.32px] text-black mb-4">
                   From data to decision in four simple steps
                 </h2>
-                <p className="text-[32px] text-gray-500 leading-[38px] tracking-[-0.32px]">
+                <p className="text-[20px] sm:text-[24px] lg:text-[32px] text-gray-500 leading-[38px] tracking-[-0.32px]">
                   Connect, analyse, act and watch your profitability grow.
                 </p>
               </div>
@@ -1689,8 +1689,10 @@ export default function HomePage() {
             {/* Content */}
             <div className="relative z-10 px-4 sm:px-6 lg:px-16 py-12 sm:py-16">
               <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-5xl font-medium mb-6 text-white leading-tight">Redefining freight profitability</h2>
-                <p className="text-lg text-white/90 mb-10 leading-relaxed">
+                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-medium mb-6 text-white leading-tight">
+                  Redefining freight profitability
+                </h2>
+                <p className="text-base sm:text-lg text-white/90 mb-10 leading-relaxed">
                   See exactly how much profit you're leaving on the table with our free fleet analysis.
                 </p>
 
